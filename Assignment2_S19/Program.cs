@@ -21,9 +21,10 @@ namespace Assignment2_S19
             Console.WriteLine(MaximumToys(prices, k));
 
             // Balanced sums
-            Console.WriteLine("\n\nBalanced sums");
+            Console.WriteLine("\n\nBalanced sums");        
             List<int> arr = new List<int> { 1, 2, 3 };
-            Console.WriteLine(balancedSums(arr));
+            Console.WriteLine(BalancedSums(arr));
+
 
             // Missing numbers
             Console.WriteLine("\n\nMissing numbers");
@@ -35,8 +36,8 @@ namespace Assignment2_S19
             // grading students
             Console.WriteLine("\n\nGrading students");
             int[] grades = { 73, 67, 38, 33 };
-            int[] r3 = gradingStudents(grades);
-            displayArray(r3);
+            int[] r3 = GradingStudents(grades);
+            DisplayArray(r3);
 
             // find the median
             Console.WriteLine("\n\nFind the median");
@@ -74,12 +75,14 @@ namespace Assignment2_S19
                 int first = a[0];   // This variable is used to store the first element of the array
                                     // in the current iteration of this for loop
 
+                // This for loop rotates the array to the left once
                 for (j = 0; j < a.Length - 1; j++)
                 {
                     a[j] = a[j + 1];
                 }
 
-                a[j] = first;
+                a[j] = first; // This changes the last element of the array to the value stored
+                              // in the first variable
             }
 
             return a;
@@ -94,47 +97,59 @@ namespace Assignment2_S19
         // Complete the balancedSums function below.
         static string BalancedSums(List<int> arr)
         {
-            string result = "NO";
+            string result = "NO";   // String variable to hold the result of the test
 
-            if (arr.Count == 0)
+            // If the list only 1 element, the result is YES.
+            if (arr.Count == 1)
             {
                 result = "YES";
             }
             else
             {
-                int sum1 = 0;
+                // Variables used to collect sum values used in the operation
+                int sum1 = 0;   
                 int sumLeft;
                 int sumRight;
+
+                // This for loop
                 for (int i = 1; i < arr.Count; i++)
                 {
                     sum1 += arr[i];
                 }
 
+                // If the sum of all elements to the right of the first element
+                // is 0 the result is YES
                 if (sum1 == 0)
                 {
-                    result = "YES";
+                    result = "YES";                    
                 }
                 else
                 {
+                    // This for loop increments through the list to determine is an element satisfies
+                    // the condition of having equal sums on both sides
                     for (int i = 1; i < arr.Count; i++)
                     {
-                        sumLeft = 0;
+                        // Set the sum variables to 0
+                        sumLeft = 0;    
                         sumRight = 0;
 
+                        // Find sum of the left side of the element
                         for (int j = 0; j < i; j++)
                         {
                             sumLeft += arr[j];
                         }
 
+                        // Find sum for the right side of the variable
                         for (int k = i + 1; k < arr.Count; k++)
                         {
                             sumRight += arr[k];
                         }
 
+                        // If both the left and right side are equal, the result is YES
                         if (sumLeft == sumRight)
                         {
                             result = "YES";
-                            break;
+                            break;  // Break out of the loop
                         }
                     }
                 }
@@ -152,17 +167,23 @@ namespace Assignment2_S19
         // Complete the gradingStudents function below.
         static int[] GradingStudents(int[] grades)
         {
-            int[] roundedGrades = new int[grades.Length];            
+            int[] roundedGrades = new int[grades.Length];   // Initialize array to hold rounded grades
+            
+            // For loop used to iterate through the grades in the array
             for (int i = 0; i < grades.Length; i++)
             {
+                // If the grade is less than 38, the grade remains the same
                 if (grades[i] < 38)
                 {
                     roundedGrades[i] = grades[i];
                 }
                 else
                 {
-                    int nextMultiple = ((grades[i] / 5)*5) + 5;
+                    int nextMultiple = ((grades[i] / 5)*5) + 5; // This operation finds the next
+                                                                // multiple of five 
 
+                    // If the result of the operation is less than 3, round the grade and
+                    // store it to the roundedGrades array. If not, it remains the same.
                     if (nextMultiple - grades[i] < 3)
                     {
                         roundedGrades[i] = nextMultiple;
