@@ -91,7 +91,36 @@ namespace Assignment2_S19
         // Complete the maximumToys function below.
         static int MaximumToys(int[] prices, int k)
         {
-            return 0;
+            int temp;
+            for (int j = 0; j < prices.Length; j++)
+            {
+                int min_position = j;
+                for (int l = j + 1; l < prices.Length; l++)
+                {
+                    if (prices[l] < prices[min_position])
+                    {
+                        min_position = l;
+                    }
+                }
+                if (min_position != j)
+                {
+                    temp = prices[j];
+                    prices[j] = prices[min_position];
+                    prices[min_position] = temp;
+                }
+            }
+
+            int n = prices.Length, total = 0, count = 0;
+            for (int i = 0; i < n; i++)
+            {
+                total += prices[i];
+                if (total > k)
+                {
+                    break;
+                }
+                count++;
+            }
+            return count;
         }
 
         // Complete the balancedSums function below.
@@ -160,7 +189,64 @@ namespace Assignment2_S19
         // Complete the missingNumbers function below.
         static int[] MissingNumbers(int[] arr, int[] brr)
         {
-            return new int[] { };
+            int[] a = new int[brr.Length - arr.Length];
+            int x;
+            int count = 0;
+            int count1 = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                while (arr[i] != brr[i])
+                {
+                    x = brr[i];
+                    for (int j = i; j < brr.Length - 1; j++)
+                    {
+                        brr[j] = brr[j + 1];
+                    }
+                    brr[brr.Length - 1] = x;
+
+                }
+
+            }
+
+            for (int i = 0; i < brr.Length - arr.Length; i++)
+            {
+                a[i] = brr[arr.Length + i];
+            }
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                for (int j = i + 1; j < a.Length; j++)
+                {
+                    if (a[j] == a[i])
+                    {
+                        a[j] = 0;
+                    }
+                }
+            }
+
+
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] == 0)
+                {
+                    count = count + 1;
+                }
+            }
+
+
+            int[] b = new int[a.Length - count];
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] != 0)
+                {
+                    b[count1] = a[i];
+                    count1 = count1 + 1;
+                }
+            }
+
+            return b;
         }
 
 
@@ -282,7 +368,87 @@ namespace Assignment2_S19
         // Complete the closestNumbers function below.
         static int[] ClosestNumbers(int[] arr)
         {
-            return new int[] { };
+              int d = 0;
+            int count = 0;
+            int count1 = 0;
+            int count2 = 0;
+            int count3 = 0;
+
+            for (int i = 0; i < arr.Length-1; i++)
+            {
+                count = arr.Length - (i + 1) + count;
+            }
+            int[] a = new int[count];
+
+            for (int i = 0; i < arr.Length-1; i++)
+            {
+                for (int j = i + 1; j < arr.Length; j++)
+                {
+                    d = arr[j] - arr[i];
+                    a[count1] = d;
+                    count1 = count1 + 1;
+                }
+            }
+
+            for(int i=0;i<a.Length;i++)
+            {
+                if(a[i]<0)
+                {
+                    a[i] = (-1) * a[i];
+                }
+            }
+
+            int diff = a[0];
+
+            for (int i = 1; i < a.Length; i++)
+            {
+                if (diff > a[i])
+                {
+                    diff = a[i];
+                }
+            }
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] == diff)
+                {
+                    count2 = count2 + 1;
+                }
+            }
+
+            int[] b = new int[2 * count2];
+
+            for (int i = 0; i < arr.Length-1; i++)
+            {
+                for (int j = i + 1; j < arr.Length; j++)
+                {
+                    d = arr[j] - arr[i];
+                    if (d < 0)
+                    {
+                        d = (-1) * d; //Making the negative number to positive by multiplying it with -1.
+                    }
+
+                    if (d == diff)
+                    {
+                        
+                        if (a[i] > a[j])
+                        {
+                            b[count3] = arr[j];
+                            b[count3 + 1] = arr[i];
+                            count3 = count3 + 2;
+                        }
+                        if (a[j] > a[i])
+                        {
+                            b[count3] = arr[i];
+                            b[count3 + 1] = arr[j];
+                            count3 = count3 + 2;
+                        }
+                    }
+
+                }//End of  for loop
+            }//End of for loop.
+
+            return b;
         }
 
         // Complete the dayOfProgrammer function below.
