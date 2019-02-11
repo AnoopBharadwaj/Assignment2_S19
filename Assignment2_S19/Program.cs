@@ -22,7 +22,7 @@ namespace Assignment2_S19
 
             // Balanced sums
             Console.WriteLine("\n\nBalanced sums");
-            List<int> arr = new List<int> { 1, 2, 3 };
+            List<int> arr = new List<int> { 1, 2, 3};
             Console.WriteLine(balancedSums(arr));
 
             // Missing numbers
@@ -34,7 +34,7 @@ namespace Assignment2_S19
 
             // grading students
             Console.WriteLine("\n\nGrading students");
-            int[] grades = { 73, 67, 38, 33 };
+            int[] grades = { 73, 67, 38, 33};
             int[] r3 = gradingStudents(grades);
             displayArray(r3);
 
@@ -65,7 +65,22 @@ namespace Assignment2_S19
         // Complete the rotLeft function below.
         static int[] rotLeft(int[] a, int d)
         {
-            return new int[] {};
+            // This for loop uses another for loop to rotate the array d times
+            for (int i = 0; i < d; i++)
+            {
+                int j;              // This variable is used to increment the below for loop                                    
+                int first = a[0];   // This variable is used to store the first element of the array
+                                    // in the current iteration of this for loop
+
+                for (j = 0; j < a.Length - 1; j++)
+                {
+                    a[j] = a[j + 1];
+                }
+
+                a[j] = first;
+            }
+
+            return a;
         }
 
         // Complete the maximumToys function below.
@@ -77,7 +92,52 @@ namespace Assignment2_S19
         // Complete the balancedSums function below.
         static string balancedSums(List<int> arr)
         {
-            return "";
+            string result = "NO";
+
+            if (arr.Count == 0)
+            {
+                result = "YES";
+            }
+            else
+            {
+                int sum1 = 0;
+                int sumLeft;
+                int sumRight;
+                for (int i = 1; i < arr.Count; i++)
+                {
+                    sum1 += arr[i];
+                }
+
+                if (sum1 == 0)
+                {
+                    result = "YES";
+                }
+                else
+                {
+                    for (int i = 1; i < arr.Count; i++)
+                    {
+                        sumLeft = 0;
+                        sumRight = 0;
+
+                        for (int j = 0; j < i; j++)
+                        {
+                            sumLeft += arr[j];
+                        }
+
+                        for (int k = i + 1; k < arr.Count; k++)
+                        {
+                            sumRight += arr[k];
+                        }
+
+                        if (sumLeft == sumRight)
+                        {
+                            result = "YES";
+                            break;
+                        }
+                    }
+                }
+            }
+            return result;
         }
 
         // Complete the missingNumbers function below.
@@ -90,7 +150,28 @@ namespace Assignment2_S19
         // Complete the gradingStudents function below.
         static int[] gradingStudents(int[] grades)
         {
-            return new int[] { };
+            int[] roundedGrades = new int[grades.Length];            
+            for (int i = 0; i < grades.Length; i++)
+            {
+                if (grades[i] < 38)
+                {
+                    roundedGrades[i] = grades[i];
+                }
+                else
+                {
+                    int nextMultiple = ((grades[i] / 5)*5) + 5;
+
+                    if (nextMultiple - grades[i] < 3)
+                    {
+                        roundedGrades[i] = nextMultiple;
+                    }
+                    else
+                    {
+                        roundedGrades[i] = grades[i];
+                    }
+                }
+            }
+            return roundedGrades;
         }
 
         // Complete the findMedian function below.
